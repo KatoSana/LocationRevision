@@ -1,6 +1,6 @@
 'use strict';
 
-//require('dotenv').config();
+require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
 const Tracker = require('./Tracker');
 const LocationRepository = require('../Location/LocationRepository');

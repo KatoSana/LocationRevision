@@ -1,0 +1,37 @@
+{
+  "name": "locationrevision",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KatoSana/LocationRevision.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KatoSana/LocationRevision/issues"
+  },
+  "homepage": "https://github.com/KatoSana/LocationRevision#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dayjs": "^1.8.18",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.3",
+    "identicon.js": "^2.3.3",
+    "migrate-mongo": "^7.0.1",
+    "mongo-express": "^0.54.0",
+    "mongodb": "^3.4.0",
+    "node-fetch": "^2.1.2",
+    "nodemailer": "^4.6.8",
+    "nodemon": "^1.19.4",
+    "path": "^0.12.7",
+    "underscore": "^1.9.0",
+    "uuid": "^3.3.3"
+  }
+}

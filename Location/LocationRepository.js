@@ -1,7 +1,7 @@
 "use strict";
 
 //Detectorからのデータなので基本的に削除, 変更はしない
-//require('dotenv').config();
+require('dotenv').config();
 const MongoClient = require("mongodb").MongoClient;
 const Location = require("./Location");
 

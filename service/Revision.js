@@ -6,7 +6,6 @@ const DetectionDataRepository = require('../DetectionData/DetectionDataRepositor
 const LocationRepository = require('../Location/LocationRepository');
 const FixMapLocationRepository = require('../FixMapLocation/FixMapLocationRepository');
 const MapRepository = require('../Map/MapRepository');
-const { Int32, Long } = require('bson');
 
 module.exports = class Revision {
   static async judgeInUnit(sortedDetectionData, searchTime, where){
@@ -85,7 +84,6 @@ module.exports = class Revision {
   }
 
   static async revisionFile(start) {
-    console.log("start");
     const startTime = start;
     const endTime = start+ 86400000; //1日分
     const searchTimeQuery = {
@@ -95,20 +93,19 @@ module.exports = class Revision {
     const allTrackers = await TrackerRepository.getAllTracker();
     const allMap = await MapRepository.getAllMap();
     for (let tracker of allTrackers) {
-      const detectionDatas = await DetectionDataRepository.getDetectionData(
-        tracker.beaconID,
-        searchTimeQuery
-      );
-      console.log("i got detectionData");
       const locations = await LocationRepository.getLocationByTime(
         tracker.beaconID,
         searchTimeQuery
       );
-      console.log("igot locations");
       if (locations.length == 0) {
-        console.log(`Missing`)
+        console.log(`Missing`);
         continue;
       }
+      const detectionDatas = await DetectionDataRepository.getDetectionData(
+        tracker.beaconID,
+        searchTimeQuery
+      );
+      let pushFixMapLocation = [];
       for(let location of locations){
         const map = allMap.find(map => {
           return map.mapID === location.map;
@@ -165,9 +162,12 @@ module.exports = class Revision {
           return map.name === mapName;
         });
         location.map = fixmap.mapID;
-        FixMapLocationRepository.addFixMapLocation(location);
+        pushFixMapLocation.push(location);
       }
+      console.log("push");
+      FixMapLocationRepository.addFixMapLocation(pushFixMapLocation);
+      console.log("complete");
     }
-    console.log("complete");
+    console.log("completed");
   }
 };
