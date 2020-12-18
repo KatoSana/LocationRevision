@@ -17,7 +17,6 @@ module.exports = class FixMapLocationRepository {
     client.close();
     return res.result;
   }
-  // FIX ME: Locationの取得条件を複合的に指定できるように関数を作り変える
   static async getLocationByTime(searchBeaconID, searchTimes) {
     const client = await MongoClient.connect(DBURL).catch(err => {
       console.log(err);

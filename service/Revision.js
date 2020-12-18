@@ -8,6 +8,7 @@ const FixMapLocationRepository = require('../FixMapLocation/FixMapLocationReposi
 const MapRepository = require('../Map/MapRepository');
 
 module.exports = class Revision {
+  //つぐみ中央判定
   static async judgeInUnit(sortedDetectionData, searchTime, where){
     return new Promise((resolve) =>  {
         const detectionData = sortedDetectionData.filter((detectionData) => {
@@ -53,6 +54,7 @@ module.exports = class Revision {
     })
   }
 
+  //つぐみ廊下前判定
   static async judgeInCorridor(sortedDetectionData, searchTime, where){
     const detectionData = sortedDetectionData.filter((detectionData) => {
         const startOK = (detectionData.detectedTime >= searchTime - 1000);
@@ -98,7 +100,6 @@ module.exports = class Revision {
         searchTimeQuery
       );
       if (locations.length == 0) {
-        console.log(`Missing`);
         continue;
       }
       const detectionDatas = await DetectionDataRepository.getDetectionData(
@@ -164,9 +165,7 @@ module.exports = class Revision {
         location.map = fixmap.mapID;
         pushFixMapLocation.push(location);
       }
-      console.log("push");
       FixMapLocationRepository.addFixMapLocation(pushFixMapLocation);
-      console.log("complete");
     }
     console.log("completed");
   }
