@@ -3,17 +3,28 @@
 //Detectorからのデータなので基本的に削除, 変更はしない
 require('dotenv').config();
 const MongoClient = require("mongodb").MongoClient;
+const FixMapLocation = require("./FixMapLocation");
 
 const DBName = process.env.DB_NAME || "tracking";
 const DBURL = process.env.DB_URL + DBName || "mongodb://localhost:27017/" + DBName;
 
 module.exports = class FixMapLocationRepository {
   static async addFixMapLocation(putLocation) {
+    let locations = [];
+    for(let locaiton of putLocation){
+      const fixmaplocation = new FixMapLocation(
+        locaiton["beaconID"],
+        locaiton["grid"],
+        locaiton["map"],
+        locaiton["time"]
+      );
+      locations.push(fixmaplocation);
+    }
     const client = await MongoClient.connect(DBURL).catch(err => {
       console.log(err);
     });
     const db = client.db(DBName);
-    const res = await db.collection("fixmaplocation").insertMany(putLocation);
+    const res = await db.collection("fixmaplocation").insertMany(locations);
     client.close();
     return res.result;
   }
