@@ -11,12 +11,13 @@ const DBURL = process.env.DB_URL + DBName || "mongodb://localhost:27017/" + DBNa
 module.exports = class FixMapLocationRepository {
   static async addFixMapLocation(putLocation) {
     let locations = [];
-    for(let locaiton of putLocation){
+    for(let location of putLocation){
       const fixmaplocation = new FixMapLocation(
-        locaiton["beaconID"],
-        locaiton["grid"],
-        locaiton["map"],
-        locaiton["time"]
+        location["beaconID"],
+        location["grid"],
+        location["map"],
+        location["locatedTime"],
+        location["alert"]
       );
       locations.push(fixmaplocation);
     }
